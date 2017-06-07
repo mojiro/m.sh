@@ -42,3 +42,31 @@ Example:
     2) Then it will Clean-up at WWW.
     3) At the end it will sync Backup folder to Remote rsync Server.
 ```
+
+```
+root@monster:~/.scripts# ./m.sh 
+
+Type  Site                Backup         DB                 Backup
+ D7   site1.gr            20170430-0949  site1_gr           20170430-0949
+ J    example.gr          20170430-0949  example_org        20170430-0949
+ D7   demo1.example.org   20170430-0949  demo1_example_org  20170329-1330
+ O    drupal-7.54         20170529-1820
+ D7   drupal.example.org  20170430-0949  drupal_example_org 20170430-0949
+ O    demo1.ie            20170430-0949
+ D7   demo2.example.org   20170430-0949  demo2_example_org  20170329-1329
+ O    site2.gr            20170430-0949
+ J    site3.com           20170430-0949  site3_com_db       20170430-0949
+ W4   test.com            20170430-0949  test_com           20170430-0949
+
+root@monster:~/.scripts# ./m.sh site1.gr -i
+
+Site:
+  site1.gr
+
+  Type:     Drupal 7
+  Version:  7.54
+  Database: site1_gr
+  Username: site1_gr
+  Password: 2fssg454
+
+```
