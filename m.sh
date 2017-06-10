@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# m.sh               ~ v1.7.3
-# Michael Topaloudis ~ Dublin, 2017-05-06
+# m.sh               ~ v1.7.4
+# Michael Topaloudis ~ Dublin, 2017-06-10
 # License            ~ GPL 2.0
 
 # A bash script that simplifies site operations thru console.
@@ -42,7 +42,7 @@ FPATH='~'
 
 # Script info
 APP='m.sh'
-VERSION='1.7.3'
+VERSION='1.7.4'
 CREATOR='Michael Topaloudis'
 COPYRIGHT='Dublin, 2017'
 
@@ -913,7 +913,7 @@ if [ "${OF}" == '1' ]; then
   elif [ -z "${FPATH}" ]; then
     pyel 'FPATH is empty. Specify FTP Path (maybe ~ ?) to activate FTP Backups.' 1 1
     OF='0'
-  elif [ $(lftp -c "open -u ${FUSER},${FPASS} -p ${FPORT} ${FHOST}; ls" 2> /dev/null | wc -l) == '0' ]; then
+  elif [ $(lftp -c "open -u ${FUSER},${FPASS} -p ${FPORT} ${FHOST}; ls -a" 2> /dev/null | wc -l) == '0' ]; then
     pyel 'FTP credentials are wrong. Update them to activate FTP Backups.' 1 1
     OF='0'
   fi
