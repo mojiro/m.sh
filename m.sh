@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # m.sh               ~ v1.7.4
-# Michael Topaloudis ~ Dublin, 2017-06-10
+# Michael Topaloudis ~ Dublin, 2017-06-11
 # License            ~ GPL 2.0
 
 # A bash script that simplifies site operations thru console.
@@ -116,7 +116,7 @@ s_status() {
     echo 'Type,Site,Backup,DB,Backup'
 
     for S in ${ST}; do
-       s_info_get "${S}" '1'
+       s_info_get "${S}" 1
        BW=$(ls "${DBU}/${S}/${S}"-????????-????.tar.bz2 2>/dev/null | tail -n 1 | sed 's/.tar.bz2$//' | awk -F'-' '{print $(NF - 1)"-"$NF}')
        BD=$(ls "${DBU}/${S}/${DBNAME}"-????????-????.sql 2>/dev/null | tail -n 1 | sed 's/.sql$//' | awk -F'-' '{print $(NF - 1)"-"$NF}')
 
@@ -313,6 +313,8 @@ s_list() {
 # Shows Site info.
 # param 1: Site
 s_info() {
+  s_info_get "${1}" 1 1
+
   pyel 'Site:'
   pnor "  ${1}" 1
 
@@ -352,8 +354,10 @@ s_info() {
 # Gets Site info.
 # param 1: Site
 # param 2: If 1, write them to disk
+# paran 3: If 1, force reading again
 s_info_get() {
   local TMP=''
+  local C=0
 
   STYPE=''
   SVERSION=''
@@ -361,7 +365,13 @@ s_info_get() {
   DBUSER=''
   DBPASS=''
 
-  if [ -f "${DBU}/${1}/${1}".info ]; then
+  if [ ! -z "${3}" ]; then
+    if [ "${3}" == '1' ]; then
+      C=1
+    fi
+  fi
+
+  if [ -f "${DBU}/${1}/${1}".info ] && [ "${C}" == '0' ]; then
     TMP=$(cat "${DBU}/${1}/${1}".info)
     STYPE=$(echo "${TMP}" | grep '^STYPE=.' | tail -n 1 | sed 's/^STYPE=//')
     SVERSION=$(echo "${TMP}" | grep '^SVERSION=.' | tail -n 1 | sed 's/^SVERSION=//')
